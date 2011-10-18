@@ -10,16 +10,13 @@
 		$("#tags").autocomplete({
 			source: ["test", "testagain","sprint"]
 		});
-	});
-</script>
-<script>
-	$(document).ready(function() {
 		$( "#words" ).autocomplete(
 			 '/detail/',
            {multiple: true, multipleSeparator: ' '}
 		);
 	});
 </script>
+
 </head>
 <body>
 <p>This is a test. {{ gogogo }}</p>
