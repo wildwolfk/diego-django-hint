@@ -1,0 +1,41 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Test.aspx.cs" Inherits="web_Test" %> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title>测试</title> 
+<link type="text/css" rel="stylesheet" /> 
+<link href="../css/jquery.ui.all.css" rel="stylesheet" type="text/css" /> 
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script> 
+<!-- 解决下拉列表框被遮盖 jquery.bgiframe --> 
+<script type="text/javascript" language="javascript" src="../js/jQui/jquery.bgiframe-2.1.1.js"></script> 
+<script type="text/javascript" language="javascript" src="../js/jQui/jquery.ui.core.js"></script> 
+<script type="text/javascript" language="javascript" src="../js/jQui/jquery.ui.widget.js"></script> 
+<script type="text/javascript" language="javascript" src="../js/jQui/jquery.ui.mouse.js"></script> 
+<!-- jquery.ui.autocomplete --> 
+<script type="text/javascript" language="javascript" src="../js/jQui/jquery.ui.autocomplete.js"></script> 
+<script language="javascript" type="text/javascript"> 
+$(function(){ 
+$("#txtTest").autocomplete({ 
+minLength:1, 
+source: function(request, response) { 
+$.ajax({ 
+url: "../ajax/GetAllWords.ashx", 
+dataType: "json", 
+data: request, 
+success: function( data ) { 
+response( data ); 
+} 
+}); 
+} 
+}); 
+}); 
+</script> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+<input id="txtTest" type="text" /> 
+</div> 
+</form> 
+</body> 
+</html> 
