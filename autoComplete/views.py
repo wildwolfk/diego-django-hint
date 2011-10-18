@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.shortcuts import render_to_response
 # Create your views here.
 def hello(request):
     return HttpResponse("Hello world")
@@ -20,11 +21,11 @@ def autoComplete(request):
 #                    )
 #    t = render_to_response("test.html", {"gogogo": "Now from server"})
 
-    fp = open('C:/django/hint/templates/autoComplete/test.html')
-    from django.template import Template, Context
-    
-    t = Template(fp.read())
-    fp.close()
+    # fp = open('C:/django/hint/templates/autoComplete/test.html')
+    # from django.template import Template, Context
+    # 
+    # t = Template(fp.read())
+    # fp.close()
     from autoComplete.models import words
     
     
@@ -33,8 +34,9 @@ def autoComplete(request):
         end1=tag.word
     for i in end:
         pass
-    html = t.render(Context({"gogogo": end1}))
-    return HttpResponse(html)
+    # html = t.render(Context({"gogogo": end1}))
+    # return HttpResponse(html)
+    return render_to_response("autoComplete/test.html", {"gogogo": end})
 
 def detail(request):
 #    from django.utils import simplejson
