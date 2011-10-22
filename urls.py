@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import patterns, include, url
 from views import hello
 from django.contrib import admin
-from autoComplete.views import getMeta, autoComplete, detail,testAdmin
+from autoComplete.views import getMeta, autoComplete,testAdmin
 
 admin.autodiscover()
 # Uncomment the next two lines to enable the admin:
@@ -26,5 +26,4 @@ urlpatterns = patterns('',
     url(r'^meta/$', getMeta),
 #    url(r'^/autoComplete/scripts/jquery-ui.js', templates/scripts/jquery-ui.js),
     url(r'^autoComplete/scripts/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': 'templates/autoComplete\scripts/' }),
-    url(r'^detail/$', detail)
 )

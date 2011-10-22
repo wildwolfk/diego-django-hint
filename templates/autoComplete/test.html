@@ -7,20 +7,42 @@
 
 <script>
 	$(document).ready(function() {
+		//$("#tags").autocomplete({
+		//	source: ["test", "testagain","sprint"]
+		//});
+		
+		//JQuery way to get json
 		$("#tags").autocomplete({
-			source: ["test", "testagain","sprint"]
+			source: function(request, response) {
+				$.get('/autoComplete/', request,  function(data) {
+					response(data);
+				});
+			}
 		});
-		$( "#words" ).autocomplete(
-			 '/detail/',
-           {multiple: true, multipleSeparator: ' '}
-		);
+		
+		
+		//ajax way to get json
+		$("#words").autocomplete({
+			source: function(request, response) {
+				$.ajax({
+                    url: "/autoComplete/",
+                    dataType: "json",
+                    data: request,
+                    success: function(data) {
+                        response(data);
+                    },
+				});
+			}
+		});			
+		
+		
 	});
 </script>
 
 </head>
 <body>
 <p>This is a test. {{ gogogo }}</p>
-
+<label id="new">test123</label>
 <div class="ui-widget">
 	<label for="tags">Tags: </label>
 	<input id="tags">
@@ -29,6 +51,10 @@
 	
 </div>
 
-</div>
+<table>
+<tr><td>test</td><td>test1</td></tr>
+<tr><td>test2nd</td><td>test12nd</td></tr>
+</table>
+
 </body>
 </html>
