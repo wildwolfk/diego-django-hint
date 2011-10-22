@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import patterns, include, url
 from views import hello
 from django.contrib import admin
-from autoComplete.views import getMeta, autoComplete, detail
+from autoComplete.views import getMeta, autoComplete, detail,testAdmin
 
 admin.autodiscover()
 # Uncomment the next two lines to enable the admin:
@@ -17,7 +17,8 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-     url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/testAdmin/$', testAdmin),
+    url(r'^admin/', include(admin.site.urls)),
     
     url(r'^hello/$', hello),
     url(r'^autoComplete/$', autoComplete),

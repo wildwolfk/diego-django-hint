@@ -32,8 +32,6 @@ def autoComplete(request):
     end=words.objects.filter(word='test')[:10]
     for tag in end:
         end1=tag.word
-    for i in end:
-        pass
     # html = t.render(Context({"gogogo": end1}))
     # return HttpResponse(html)
     return render_to_response("autoComplete/test.html", {"gogogo": end})
@@ -48,4 +46,41 @@ def detail(request):
 #        return HttpResponse('\n'.join('test'))   name__icontains=request.GET['q']
     
     return HttpResponse()
+
+def testAdmin(request):
+    from autoComplete.models import words
     
+    if (request.POST.get("action",'') == "refresh")  :
+        end=words.objects.all()
+        table=""
+        for tag in end:
+            table += "<tr><td><checkbox id="+str(tag[0])+"></td><td>"+str(tag[0])+"</td></tr>"
+    
+        return HttpResponse(table)
+    if (request.POST.get("action",'') == "add")  :
+        response=HttpResponse()  
+        response['Content-Type']="text/javascript"  
+        
+        p=words(word=request.POST.get("word",'')  )
+        
+        response.write(1)
+        return response
+    
+    if (request.POST.get("action",'') == "del")  :
+        response=HttpResponse()  
+        response['Content-Type']="text/javascript"  
+        queryTag = request.POST.get("title",'')  
+        
+        words.objects.filter(word=request.POST['q']).delete()
+        
+        response.write(1)
+        return response        
+        
+    table=""
+    end=words.objects.all()
+    for tag in end:
+        table += "<tr><td><checkbox id="+str(tag.word)+"></td><td>"+str(tag.word)+"</td></tr>"
+    # html = t.render(Context({"gogogo": end1}))
+    # return HttpResponse(html)
+    return render_to_response("autoComplete/testAdmin.html", {"gogogo": table})
+        

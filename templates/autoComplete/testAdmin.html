@@ -1,0 +1,32 @@
+<html>
+<header>
+<title>testAdmin of autoComplete</title>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js'></script>
+<script>
+$(document).ready(function(){
+		  
+        $("button#Refresh").click(function(){  
+        	$.get('testAdmin/?q=1',{'action':refresh}, function(data) {
+        		$("table#content").tbody=data
+        	});  
+        });  
+        $("button#Refresh").click(function(){  
+            $.post('testAdmin/',{'action':add, 'word':$("input#add").value}, function(ret) {});    
+        });
+        $("button#Refresh").click(function(){  
+            $.post('testAdmin/',{'action':refresh, 'word':$("input#del").value}, function(ret) {});    
+        });
+    });  
+</script>
+
+</header>
+<body>
+<p>this is the testAdmin of autoComplete</p>
+<table id="content">
+{{  gogogo  }}
+</table>
+<button id="Refresh">Refresh</button>
+<button id="Add">Add</button><input id="add" />
+<button id="Del">Delete</button><input id="del" />
+</body>
+</html>
