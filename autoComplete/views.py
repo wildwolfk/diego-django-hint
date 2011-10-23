@@ -40,6 +40,7 @@ def autoComplete(request):
             for i in words.objects.filter(word__icontains=prefix)[:10]:
                 temp.append(i.word)
             json_data=simplejson.dumps(temp)
+
             return HttpResponse(json_data,mimetype='application/json')
         except :
             return HttpResponse(simplejson.dumps([]),mimetype='application/json')
@@ -57,34 +58,41 @@ def autoComplete(request):
     
 def testAdmin(request):
     from autoComplete.models import words
-    if request.GET.has_key('action') :
-        if (request.GET["action"] == "refresh")  :
-            end=words.objects.all()
-            table=""
-            for tag in end:
-                table += "<tr><td><checkbox id="+str(tag[0])+"></td><td>"+str(tag[0])+"</td></tr>"
+    if request.method == 'GET' :
+        if request.GET.has_key('action') :
+            if (request.GET["action"] == "refresh")  :
+                end=words.objects.all()
+                table=""
+                for tag in end:
+                    table += "<tr><td><checkbox id="+str(tag[0])+"></td><td>"+str(tag[0])+"</td></tr>"
+                    
+                return HttpResponse(table)
+            
+#    if (request.POST.get("action",'') == "add")  :
+    elif request.method == 'POST':
+        if request.POST.get('action', '') :
+            if (request.POST['action'] == "add")  :
+                response=HttpResponse()  
+                response['Content-Type']="text/javascript"  
                 
-            return HttpResponse(table)
-            
-        if (request.POST.get("action",'') == "add")  :
-            response=HttpResponse()  
-            response['Content-Type']="text/javascript"  
-            
-            p=words(word=request.POST.get("word",'')  )
-            
-            response.write(1)
-            return response
-        
+#                p=words(word=request.POST.get("word",'')  )
+                p=words(word=request.POST["word"])
+                p.save()
+           
+                response.write(1)
+                return response
+       
         if (request.POST.get("action",'') == "del")  :
             response=HttpResponse()  
             response['Content-Type']="text/javascript"  
             queryTag = request.POST.get("title",'')  
-            
-            words.objects.filter(word=request.POST['q']).delete()
-            
+        
+            words.objects.filter(word=request.POST['word']).delete()
+        
             response.write(1)
             return response        
-        
+        return 
+    
     table=""
     end=words.objects.all()
     for tag in end:

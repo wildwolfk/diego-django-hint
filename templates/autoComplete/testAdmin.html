@@ -4,17 +4,19 @@
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js'></script>
 <script>
 $(document).ready(function(){
-		  
+		
         $("button#Refresh").click(function(){  
-        	$.get('testAdmin/?q=1',{'action':refresh}, function(data) {
-        		$("table#content").tbody=data
+        	$.get('/admin/testAdmin/',{'action':"refresh"}, function(data) {
+        		//$("table#content").tbody=data
+        		alert(data);
         	});  
         });  
-        $("button#Refresh").click(function(){  
-            $.post('testAdmin/',{'action':add, 'word':$("input#add").value}, function(ret) {});    
+        $("button#Add").click(function(){  
+        	//alert($("input#addword").val());
+            $.post('/admin/testAdmin/',{'action':"add",'word':$("#addword").val()}, function(ret) {alert(ret);});    
         });
-        $("button#Refresh").click(function(){  
-            $.post('testAdmin/',{'action':refresh, 'word':$("input#del").value}, function(ret) {});    
+        $("button#Del").click(function(){  
+            $.post('/admin/testAdmin/',{'action':"del",'word':$("#delword").val()}, function(ret) {});    
         });
     });  
 </script>
@@ -23,10 +25,16 @@ $(document).ready(function(){
 <body>
 <p>this is the testAdmin of autoComplete</p>
 <table id="content">
-{{  gogogo  }}
+{% for word in words  %}
+	<tr><td>{{ word.word }}</td></tr>
+{% endfor  %}
+</table>
+
+<table id="content">
+{{  gogogo|safe  }}
 </table>
 <button id="Refresh">Refresh</button>
-<button id="Add">Add</button><input id="add" />
-<button id="Del">Delete</button><input id="del" />
+<button id="Add">Add</button><input id="addword" value="123" />
+<button id="Del">Delete</button><input id="delword" />
 </body>
 </html>
